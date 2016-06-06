@@ -8,6 +8,7 @@ require 'vagrant/util/template_renderer'
 require 'vagrant-azure/util/timer'
 require 'vagrant-azure/util/machine_id_helper'
 require 'haikunator'
+require 'digest/md5'
 
 module VagrantPlugins
   module Azure
@@ -40,6 +41,11 @@ module VagrantPlugins
           subnet_name               = config.subnet_name
           tcp_endpoints             = config.tcp_endpoints
           availability_set_name     = config.availability_set_name
+          storage_account_type      = config.storage_account_type
+          security_group            = config.security_group
+          storage_type              = config.storage_type
+          storage_account_name      = Digest::MD5.hexdigest(vm_name)[0..20]
+          public_dns_prefix         = config.public_dns_prefix
 
           # Launch!
           env[:ui].info(I18n.t('vagrant_azure.launching_instance'))
@@ -54,6 +60,11 @@ module VagrantPlugins
           env[:ui].info(" -- Subnet Name: #{subnet_name}") if subnet_name
           env[:ui].info(" -- TCP Endpoints: #{tcp_endpoints}") if tcp_endpoints
           env[:ui].info(" -- Availability Set Name: #{availability_set_name}") if availability_set_name
+          env[:ui].info(" -- Security Group: #{security_group}") if security_group
+          env[:ui].info(" -- Storage Type: #{storage_type}") if storage_type
+          env[:ui].info(" -- Storage Account Name: #{storage_account_name}") if storage_account_name
+          env[:ui].info(" -- Public DNS Prefix: #{public_dns_prefix}") if public_dns_prefix
+          
 
           image_publisher, image_offer, image_sku, image_version = vm_image_urn.split(':')
 
@@ -65,7 +76,7 @@ module VagrantPlugins
           @logger.info("Time to fetch os image details: #{env[:metrics]['get_image_details']}")
 
           deployment_params = {
-            dnsLabelPrefix:       Haikunator.haikunate(100),
+            dnsLabelPrefix:       public_dns_prefix,
             vmSize:               vm_size,
             vmName:               vm_name,
             imagePublisher:       image_publisher,
@@ -73,7 +84,10 @@ module VagrantPlugins
             imageSku:             image_sku,
             imageVersion:         image_version,
             subnetName:           subnet_name,
-            virtualNetworkName:   virtual_network_name
+            virtualNetworkName:   virtual_network_name,
+            securityGroup:        security_group,
+            storageType:          storage_type,
+            storageAccountName:   storage_account_name
           }
 
           if get_image_os(image_details) != 'Windows'

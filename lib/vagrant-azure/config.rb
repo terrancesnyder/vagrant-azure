@@ -93,6 +93,21 @@ module VagrantPlugins
       # @return [String]
       attr_accessor :endpoint
 
+      # (Optional) The security group to use -- default '${vm_name}-vagrantNSG'.
+      #
+      # @return [String]
+      attr_accessor :security_group
+
+      # (Optional) The storage type to use for OS disk -- default 'Standard_LRS'. Standard_LRS|Standard_ZRS|Standard_GRS|Standard_RAGRS|Premium_LRS
+      #
+      # @return [String]
+      attr_accessor :storage_type
+
+      # (Optional) The public DNS prefix to use when creating your DNS entry -- default 'Haikunator.haikunate(100)'
+      #
+      # @return [String]
+      attr_accessor :public_dns_prefix
+
       def initialize
         @tenant_id = UNSET_VALUE
         @client_id = UNSET_VALUE
@@ -111,6 +126,9 @@ module VagrantPlugins
         @availability_set_name = UNSET_VALUE
         @instance_ready_timeout = UNSET_VALUE
         @instance_check_interval = UNSET_VALUE
+        @security_group = UNSET_VALUE
+        @storage_type = UNSET_VALUE
+        @public_dns_prefix = UNSET_VALUE
       end
 
       def finalize!
@@ -130,6 +148,9 @@ module VagrantPlugins
         @tcp_endpoints = nil if @tcp_endpoints == UNSET_VALUE
         @vm_size = 'Standard_D1' if @vm_size == UNSET_VALUE
         @availability_set_name = nil if @availability_set_name == UNSET_VALUE
+        @security_group = @vm_name if @security_group == UNSET_VALUE
+        @storage_type = 'Standard_LRS' if @storage_type == UNSET_VALUE
+        @public_dns_prefix = Haikunator.haikunate(100) if @public_dns_prefix == UNSET_VALUE
 
         @instance_ready_timeout = 120 if @instance_ready_timeout == UNSET_VALUE
         @instance_check_interval = 2 if @instance_check_interval == UNSET_VALUE

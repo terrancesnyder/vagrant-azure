@@ -3,6 +3,7 @@
 # Licensed under the MIT License. See License in the project root for license information.
 require 'log4r'
 require 'vagrant-azure/util/machine_id_helper'
+require 'digest/md5'
 
 module VagrantPlugins
   module Azure
@@ -20,7 +21,10 @@ module VagrantPlugins
 
           begin
             env[:ui].info(I18n.t('vagrant_azure.terminating', parsed))
-            env[:azure_arm_service].resources.resource_groups.delete(parsed[:group]).value!.body
+            
+            # destroy VM
+            env[:azure_arm_service].compute.virtual_machines.delete(parsed[:group], parsed[:name]).value!.body
+            # [concat(uniquestring(resourceGroup().id), 'vagrant')]
           rescue MsRestAzure::AzureOperationError => ex
             unless ex.response.status == 404
               raise ex
