@@ -61,6 +61,7 @@ module VagrantPlugins
             end
 
             b2.use Provision
+            b2.use SyncFolders
           end
         end
       end
@@ -186,6 +187,7 @@ module VagrantPlugins
       autoload :TerminateInstance, action_root.join('terminate_instance')
       autoload :TimedProvision, action_root.join('timed_provision')
       autoload :WaitForState, action_root.join('wait_for_state')
+      autoload :SyncFolders, action_root.join('sync_folders')
     end
   end
 end
