@@ -46,6 +46,7 @@ module VagrantPlugins
           storage_type              = config.storage_type
           storage_account_name      = Digest::MD5.hexdigest(vm_name)[0..20]
           public_dns_prefix         = config.public_dns_prefix
+          arm_template              = config.arm_template
 
           # Launch!
           env[:ui].info(I18n.t('vagrant_azure.launching_instance'))
@@ -64,6 +65,8 @@ module VagrantPlugins
           env[:ui].info(" -- Storage Type: #{storage_type}") if storage_type
           env[:ui].info(" -- Storage Account Name: #{storage_account_name}") if storage_account_name
           env[:ui].info(" -- Public DNS Prefix: #{public_dns_prefix}") if public_dns_prefix
+          env[:ui].info(" -- Azure ARM Template: #{arm_template}") if arm_template
+          env[:ui].info(" -- Base Path: #{machine.env.root_path}")
           
 
           image_publisher, image_offer, image_sku, image_version = vm_image_urn.split(':')
@@ -111,7 +114,7 @@ module VagrantPlugins
           end
           @logger.info("Time to create resource group: #{env[:metrics]['put_resource_group']}")
 
-          deployment_params = build_deployment_params(template_params, deployment_params.reject{|_,v| v.nil?})
+          deployment_params = build_deployment_params(machine.env.root_path, arm_template, template_params, deployment_params.reject{|_,v| v.nil?})
 
           env[:ui].info('Starting deployment')
           env[:metrics]['deployment_time'] = Util::Timer.time do
@@ -183,14 +186,18 @@ module VagrantPlugins
         end
 
         # This method generates the deployment template
-        def render_deployment_template(options)
-          Vagrant::Util::TemplateRenderer.render('arm/deployment.json', options.merge(template_root: template_root))
+        def render_deployment_template(base_folder, template_file, options)
+          if (template_file == 'arm/365532b4-357f-11e6-ac61-9e71128cae77.json.erb')
+            Vagrant::Util::TemplateRenderer.render(template_file, options.merge(template_root: template_root))
+          else
+            Vagrant::Util::TemplateRenderer.render(template_file, options.merge(template_root: base_folder))
+          end
         end
 
-        def build_deployment_params(template_params, deployment_params)
+        def build_deployment_params(base_folder, template_file, template_params, deployment_params)
           params = ::Azure::ARM::Resources::Models::Deployment.new
           params.properties = ::Azure::ARM::Resources::Models::DeploymentProperties.new
-          params.properties.template = JSON.parse(render_deployment_template(template_params))
+          params.properties.template = JSON.parse(render_deployment_template(base_folder, template_file, template_params))
           params.properties.mode = ::Azure::ARM::Resources::Models::DeploymentMode::Incremental
           params.properties.parameters = build_parameters(deployment_params)
           params

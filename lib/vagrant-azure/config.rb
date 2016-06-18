@@ -108,6 +108,11 @@ module VagrantPlugins
       # @return [String]
       attr_accessor :public_dns_prefix
 
+      # (Optional) The arm template to specify and use when brining up the VM. -- defaults to plugin default provided version
+      #
+      # @return [String]
+      attr_accessor :arm_template
+
       def initialize
         @tenant_id = UNSET_VALUE
         @client_id = UNSET_VALUE
@@ -129,6 +134,7 @@ module VagrantPlugins
         @security_group = UNSET_VALUE
         @storage_type = UNSET_VALUE
         @public_dns_prefix = UNSET_VALUE
+        @arm_template = UNSET_VALUE
       end
 
       def finalize!
@@ -151,6 +157,7 @@ module VagrantPlugins
         @security_group = @vm_name if @security_group == UNSET_VALUE
         @storage_type = 'Standard_LRS' if @storage_type == UNSET_VALUE
         @public_dns_prefix = Haikunator.haikunate(100) if @public_dns_prefix == UNSET_VALUE
+        @arm_template = 'arm/365532b4-357f-11e6-ac61-9e71128cae77.json' if @arm_template == UNSET_VALUE
 
         @instance_ready_timeout = 120 if @instance_ready_timeout == UNSET_VALUE
         @instance_check_interval = 2 if @instance_check_interval == UNSET_VALUE
