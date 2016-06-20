@@ -41,7 +41,6 @@ module VagrantPlugins
           subnet_name               = config.subnet_name
           tcp_endpoints             = config.tcp_endpoints
           availability_set_name     = config.availability_set_name
-          storage_account_type      = config.storage_account_type
           security_group            = config.security_group
           storage_type              = config.storage_type
           storage_account_name      = Digest::MD5.hexdigest(vm_name)[0..20]
