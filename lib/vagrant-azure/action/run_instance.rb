@@ -9,6 +9,7 @@ require 'vagrant-azure/util/timer'
 require 'vagrant-azure/util/machine_id_helper'
 require 'haikunator'
 require 'digest/md5'
+require 'securerandom'
 
 module VagrantPlugins
   module Azure
@@ -173,7 +174,7 @@ module VagrantPlugins
         end
 
         def put_deployment(azure, rg_name, params)
-          azure.resources.deployments.create_or_update(rg_name, 'vagrant', params).value!.body
+          azure.resources.deployments.create_or_update(rg_name, SecureRandom.uuid, params).value!.body
         end
 
         def put_resource_group(azure, name, location)
