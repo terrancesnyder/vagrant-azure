@@ -55,6 +55,7 @@ module VagrantPlugins
       #
       # @return [String]
       attr_accessor :dns_name
+      attr_accessor :public_dns_prefix    # backward compat
 
       # Password for the VM -- This is not recommended for *nix deployments
       #
@@ -192,6 +193,11 @@ module VagrantPlugins
       # @return [File]
       attr_accessor :security_config
 
+      # (Optional) A custom arm template to use rather than the default
+      #
+      # @return [File]
+      attr_accessor :arm_template
+
       def initialize
         @tenant_id = UNSET_VALUE
         @client_id = UNSET_VALUE
@@ -225,6 +231,8 @@ module VagrantPlugins
         @destroy_resource_group = UNSET_VALUE
         @security_group = UNSET_VALUE
         @security_config = UNSET_VALUE
+        @arm_template = UNSET_VALUE
+        @public_dns_prefix = UNSET_VALUE
       end
 
       def finalize!
@@ -250,6 +258,7 @@ module VagrantPlugins
         @virtual_network_name = nil if @virtual_network_name == UNSET_VALUE
         @subnet_name = nil if @subnet_name == UNSET_VALUE
         @dns_name = nil if @dns_name == UNSET_VALUE
+        @public_dns_prefix = nil if @dns_name == UNSET_VALUE
         @tcp_endpoints = nil if @tcp_endpoints == UNSET_VALUE
         @vm_storage_account_type = 'Premium_LRS' if @vm_storage_account_type == UNSET_VALUE
         @availability_set_name = nil if @availability_set_name == UNSET_VALUE
@@ -264,6 +273,7 @@ module VagrantPlugins
         @winrm_install_self_signed_cert = true if @winrm_install_self_signed_cert == UNSET_VALUE
         @wait_for_destroy = false if @wait_for_destroy == UNSET_VALUE
         @destroy_resource_group = false if @wait_for_destroy == UNSET_VALUE
+        @arm_template = nil if @arm_template == UNSET_VALUE
       end
 
       def validate(machine)
