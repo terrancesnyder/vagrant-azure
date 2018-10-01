@@ -183,6 +183,8 @@ module VagrantPlugins
 
           deployment_params = build_deployment_params(template_params, deployment_params.reject { |_, v| v.nil? })
 
+          env[:ui].info(" -- Azure Template: #{deployment_params.properties.template}")
+
           env[:ui].info(" -- Starting deployment")
           env[:metrics]["deployment_time"] = Util::Timer.time do
             put_deployment(azure, resource_group_name, deployment_params)
@@ -310,9 +312,6 @@ module VagrantPlugins
           params.properties.template = JSON.parse(render_deployment_template(template_params))
           params.properties.mode = ::Azure::ARM::Resources::Models::DeploymentMode::Incremental
           params.properties.parameters = build_parameters(deployment_params)
-
-          env[:ui].info(" -- Azure Template: #{params.properties.template}")
-
           params
         end
 
