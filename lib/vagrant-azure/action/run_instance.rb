@@ -124,10 +124,10 @@ module VagrantPlugins
 
           # we need to pass different parameters depending upon the OS
           # if custom image, then require vm_operating_system
-          operating_system = if vm_vhd_uri
-                               vm_operating_system
-                             elsif vm_managed_image_id
-                               get_managed_image_os(azure, vm_managed_image_id)
+          operating_system = if vm_managed_image_id
+                              get_managed_image_os(azure, vm_managed_image_id)
+                             elsif vm_vhd_uri
+                              vm_operating_system
                              else
                                get_image_os(azure, location, image_publisher, image_offer, image_sku, image_version)
                              end
