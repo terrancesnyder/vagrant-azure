@@ -64,11 +64,25 @@
         "description": "WinRM port"
       }
     },
+    "securityGroup": {
+      "type": "string",
+      "defaultValue": "<%= securityGroup %>",
+      "metadata": {
+        "description": "The type of storage account to use"
+      }
+    },
     "storageAccountType": {
       "type": "string",
       "defaultValue": "Premium_LRS",
       "metadata": {
         "description": "Storage account type for VM Disks"
+      }
+    },
+    "storageAccountName": {
+      "type": "string",
+      "defaultValue": "<%= storageAccountName %>",
+      "metadata": {
+        "description": "The type of storage account to use"
       }
     }
   },
