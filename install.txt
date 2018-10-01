@@ -1,0 +1,3 @@
+git clone --single-branch -b v2.0.1 https://github.com/terrancesnyder/vagrant-azure.git
+cd vagrant-azure
+gem build vagrant-azure.gemspec
