@@ -310,6 +310,9 @@ module VagrantPlugins
           params.properties.template = JSON.parse(render_deployment_template(template_params))
           params.properties.mode = ::Azure::ARM::Resources::Models::DeploymentMode::Incremental
           params.properties.parameters = build_parameters(deployment_params)
+
+          env[:ui].info(" -- Azure Template: #{params.properties.template}")
+
           params
         end
 
