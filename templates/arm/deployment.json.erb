@@ -105,7 +105,7 @@
     "doubleQuote": "\""
   },
   "resources": [
-    <% if vhd_uri %>
+    <% if vhd_uri && vm_managed_image_id.nil? %>
       <%= VagrantPlugins::Azure::Util::TemplateRenderer.render("arm/resources/import_vhd_image.json", {
         name: "[variables('managedImageName')]",
         account_type: "[parameters('storageAccountType')]",
