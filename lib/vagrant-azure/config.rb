@@ -247,7 +247,7 @@ module VagrantPlugins
         @vm_name = Haikunator.haikunate(100) if @vm_name == UNSET_VALUE
         @vm_size = 'Standard_DS2_v2' if @vm_size == UNSET_VALUE
         @vm_password = nil if @vm_password == UNSET_VALUE
-        @vm_image_urn = nil if @vm_image_urn == UNSET_VALUE
+        @vm_image_urn = 'canonical:ubuntuserver:16.04.0-LTS:latest' if @vm_image_urn == UNSET_VALUE
         @vm_vhd_uri = nil if @vm_vhd_uri == UNSET_VALUE
         @vm_vhd_storage_account_id = nil if @vm_vhd_storage_account_id == UNSET_VALUE
         @vm_operating_system = nil if @vm_operating_system == UNSET_VALUE
