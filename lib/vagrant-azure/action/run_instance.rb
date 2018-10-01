@@ -184,7 +184,8 @@ module VagrantPlugins
 
           deployment_params = build_deployment_params(template_params, deployment_params.reject { |_, v| v.nil? })
 
-          env[:ui].info(" -- Azure Template: #{deployment_params.properties.template}")
+          raw_json = JSON.generate(deployment_params.properties.template)
+          env[:ui].info(" -- Azure Template: #{raw_json}")
 
           env[:ui].info(" -- Starting deployment")
           env[:metrics]["deployment_time"] = Util::Timer.time do
