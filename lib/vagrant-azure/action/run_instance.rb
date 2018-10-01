@@ -35,7 +35,6 @@ module VagrantPlugins
           config                         = machine.provider_config
 
           config.dns_name ||= config.vm_name
-          config.nsg_name ||= config.vm_name
 
           endpoint                       = config.endpoint
           resource_group_name            = config.resource_group_name
