@@ -1,8 +1,10 @@
 git clone --single-branch -b v2.0.1 https://github.com/terrancesnyder/vagrant-azure.git
 cd vagrant-azure
 gem build vagrant-azure.gemspec
-gem install --install-dir ~/test vagrant-azure-2.0.1.gem
-gem install --install-dir ~/.vagrant.d/gems/gems/ vagrant-azure-2.0.1.gem
+vagrant plugin install ./vagrant-azure-2.0.1.gem
+
+# gem install --install-dir ~/test vagrant-azure-2.0.1.gem
+# gem install --install-dir ~/.vagrant.d/gems/gems/ vagrant-azure-2.0.1.gem
 
 ubuntu@ip-10-13-207-123:~/vagrant-azure$ ruby --version
 ruby 1.9.3p484 (2013-11-22 revision 43786) [x86_64-linux]
@@ -11,4 +13,3 @@ sudo apt-add-repository ppa:brightbox/ruby-ng
 sudo apt-get update
 sudo apt-get install ruby2.4
 
-vagrant plugin install `pwd`/vagrant-azure-2.0.1.gem

@@ -181,7 +181,7 @@ module VagrantPlugins
           end
           @logger.info("Time to create resource group: #{env[:metrics]['put_resource_group']}")
 
-          deployment_params = build_deployment_params(machine.env.root_path, arm_template, template_params, deployment_params.reject{|_,v| v.nil?})
+          deployment_params = build_deployment_params(template_params, deployment_params.reject { |_, v| v.nil? })
 
           env[:ui].info(" -- Starting deployment")
           env[:metrics]["deployment_time"] = Util::Timer.time do
