@@ -69,6 +69,10 @@ en:
         The Azure instance is not created. Run `vagrant up` to create it.
       short_stopped: |-
         stopped
+      short_starting: |-
+        starting
+      short_started: |-
+        started
       long_stopped: |-
         The Azure instance is stopped. Run `vagrant up` to start it.
       short_stopping: |-
@@ -92,6 +96,8 @@ en:
         you can run `vagrant destroy`.
     waiting_for_ssh: |-
       Waiting for SSH to become available...
+    waiting_for_winrm: |-
+      Waiting for WinRM to become available...
     ready: |-
       Machine is booted and ready for use!
     public_key_path_private_key: |-
@@ -102,7 +108,19 @@ en:
       Please specify a secure key to use with config.ssh.private_key_path
       (see: https://www.vagrantup.com/docs/vagrantfile/ssh_settings.html).
       If not, you publicly accessible Azure VM will be extremely insecure.
+    too_many_tcp_endpoints: |-
+      There are '%{count}' TCP Endpoints (Inbound Security Rules) specified for the NetworkSecurityGroup, which is too many. 
+      There can be a max of 3963 (4096 - 133, where 133 is where we start as priority for custom rule #1, and so forth)
+      (see: https://docs.microsoft.com/en-us/azure/virtual-network/virtual-networks-nsg#Nsg-rules)
+    unknown_type_as_tcp_endpoints: |-
+      Unrecognized setting '%{input}' as TCP Endpoints (Inbounds Security Rules), expected an array, string or positive number.
     waiting_for_ready: |-
       Waiting for instance to become "ready"...
     waiting_for_stop: |-
       Waiting for instance to become "stopped"...
+    custom_image_os_error:
+      If you provide a custom image, you must provide the operating system for the image (vm_operating_system).
+    vhd_and_managed_image_error:
+      Specifying both vm_vhd_uri and vm_managed_image_id is not supported. Please specify one or the other.
+    manage_image_id_format_error:
+      The vm_managed_image_id doesn't fit the expected format, plese verify it looks like '/subscriptions/{sub_id}/resourceGroups/{group_name}/providers/Microsoft.Compute/images/{image_name}'

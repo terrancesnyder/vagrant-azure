@@ -1,3 +1,7 @@
+# encoding: utf-8
+# Copyright (c) Microsoft Corporation. All rights reserved.
+# Licensed under the MIT License. See License in the project root for license information.
+
 module VagrantPlugins
   module Azure
     module Util
@@ -18,7 +22,7 @@ module VagrantPlugins
             end
 
             count += 1
-            vm = azure.compute.virtual_machines.get(parsed[:group], parsed[:name], 'instanceView').value!.body
+            vm = azure.compute.virtual_machines.get(parsed[:group], parsed[:name], 'instanceView')
             if yield(vm)
               task.shutdown
               true

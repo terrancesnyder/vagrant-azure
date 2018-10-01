@@ -6,12 +6,14 @@ require 'azure_mgmt_resources'
 require 'azure_mgmt_compute'
 require 'azure_mgmt_network'
 require 'azure_mgmt_storage'
+require 'vagrant-azure/version'
 
 module VagrantPlugins
   module Azure
     module Services
       class AzureResourceManager
 
+        TELEMETRY = "vagrant-azure/#{::VagrantPlugins::Azure::VERSION}"
         TENANT_ID_NAME = 'AZURE_TENANT_ID'
         CLIENT_ID_NAME = 'AZURE_CLIENT_ID'
         CLIENT_SECRET_NAME = 'AZURE_CLIENT_SECRET'
@@ -68,6 +70,7 @@ module VagrantPlugins
         def build(clazz)
           instance = clazz.new(*client_params)
           instance.subscription_id = @subscription_id
+          instance.add_user_agent_information(TELEMETRY)
           instance
         end
 

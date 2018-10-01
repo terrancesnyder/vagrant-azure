@@ -3,7 +3,6 @@
 # Licensed under the MIT License. See License in the project root for license information.
 require 'log4r'
 require 'vagrant-azure/util/machine_id_helper'
-require 'digest/md5'
 
 module VagrantPlugins
   module Azure
@@ -11,7 +10,7 @@ module VagrantPlugins
       class TerminateInstance
         include VagrantPlugins::Azure::Util::MachineIdHelper
 
-        def initialize(app, env)
+        def initialize(app, _)
           @app = app
           @logger = Log4r::Logger.new('vagrant_azure::action::terminate_instance')
         end
@@ -21,10 +20,18 @@ module VagrantPlugins
 
           begin
             env[:ui].info(I18n.t('vagrant_azure.terminating', parsed))
-            
-            # destroy VM
-            env[:azure_arm_service].compute.virtual_machines.delete(parsed[:group], parsed[:name]).value!.body
-            # [concat(uniquestring(resourceGroup().id), 'vagrant')]
+
+            if env[:machine].provider_config.destroy_resource_group
+              env[:ui].info('Deleting resource group')
+              if env[:machine].provider_config.wait_for_destroy
+                env[:azure_arm_service].resources.resource_groups.delete(parsed[:group])
+              else
+                # Call the begin_xxx_async version to kick off the delete, but don't wait for the resource group to be cleaned up
+                env[:azure_arm_service].resources.resource_groups.begin_delete_async(parsed[:group]).value!
+              end  
+            else
+              env[:azure_arm_service].compute.virtual_machines.delete(parsed[:group], parsed[:name])
+            end            
           rescue MsRestAzure::AzureOperationError => ex
             unless ex.response.status == 404
               raise ex
