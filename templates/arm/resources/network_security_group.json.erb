@@ -82,17 +82,17 @@
       <% end %>
       <% security_config.each_with_index do |obj, index| %>
         ,{
-          "name": "<%= obj.name %>",
+          "name": "<%= obj['name'] %>",
           "properties": {
-            "description": "<%= obj.properties.description %>",
-            "protocol": "<%= obj.properties.protocol %>",
-            "sourcePortRange": "<%= obj.properties.sourcePortRange %>",
-            "destinationPortRange": "<%= obj.properties.destinationPortRange %>",
-            "sourceAddressPrefix": "<%= obj.properties.sourceAddressPrefix %>",
-            "destinationAddressPrefix": "<%= obj.properties.destinationAddressPrefix %>",
-            "access": "<%= obj.properties.access %>",
-            "priority": <%= obj.properties.priority %>,
-            "direction": "<%= obj.properties.direction %>"
+            "description": "<%= obj['properties']['description'] %>",
+            "protocol": "<%= obj['properties']['protocol'] %>",
+            "sourcePortRange": "<%= obj['properties']['sourcePortRange'] %>",
+            "destinationPortRange": "<%= obj['properties']['destinationPortRange'] %>",
+            "sourceAddressPrefix": "<%= obj['properties']['sourceAddressPrefix'] %>",
+            "destinationAddressPrefix": "<%= obj['properties']['destinationAddressPrefix'] %>",
+            "access": "<%= obj['properties']['access'] %>",
+            "priority": <%= obj['properties']['priority'] %>,
+            "direction": "<%= obj['properties']['direction'] %>"
           }
         }
       <% end %>
