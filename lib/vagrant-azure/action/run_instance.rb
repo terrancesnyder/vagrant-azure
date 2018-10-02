@@ -150,7 +150,7 @@ module VagrantPlugins
             operating_system:               operating_system,
             data_disks:                     config.data_disks,
             arm_template:                   (config.arm_template || "arm/deployment.json"),
-            root_path:                      machine.env.root_path
+            root_path:                      (machine.env.root_path + "")
           }
 
           env[:ui].info(" -- Template Parameters: #{template_params}")
@@ -320,7 +320,7 @@ module VagrantPlugins
             folder = options['base_folder']
           end
 
-          VagrantPlugins::Azure::Util::TemplateRenderer.render(options['arm_template'] + "", 
+          Vagrant::Util::TemplateRenderer.render(options['arm_template'] + "", 
             options.merge({
               self_signed_cert_resource: self_signed_cert_resource,
               template_root: folder
