@@ -260,7 +260,7 @@ module VagrantPlugins
         @dns_name = nil if @dns_name == UNSET_VALUE
         @public_dns_prefix = nil if @public_dns_prefix == UNSET_VALUE
         @tcp_endpoints = nil if @tcp_endpoints == UNSET_VALUE
-        @vm_storage_account_type = 'Premium_LRS' if @vm_storage_account_type == UNSET_VALUE
+        @vm_storage_account_type = 'Standard_LRS' if @vm_storage_account_type == UNSET_VALUE
         @availability_set_name = nil if @availability_set_name == UNSET_VALUE
         @security_group = @vm_name if @security_group == UNSET_VALUE
         @security_config = nil if @security_config == UNSET_VALUE
