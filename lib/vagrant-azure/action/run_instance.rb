@@ -150,7 +150,7 @@ module VagrantPlugins
             operating_system:               operating_system,
             data_disks:                     config.data_disks,
             arm_template:                   (config.arm_template || "arm/deployment.json"),
-            root_path:                      (machine.env.root_path + "")
+            root_path:                      (machine.env.root_path.to_s)
           }
 
           env[:ui].info(" -- Template Parameters: #{template_params}")
