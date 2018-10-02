@@ -309,7 +309,7 @@ module VagrantPlugins
               gsub("\n", "; ")
             self_signed_cert_resource = VagrantPlugins::Azure::Util::TemplateRenderer.render("arm/selfsignedcert.json", options.merge({setup_winrm_powershell: encoded_setup_winrm_powershell}))
           end
-          VagrantPlugins::Azure::Util::TemplateRenderer.render(options.arm_template, 
+          VagrantPlugins::Azure::Util::TemplateRenderer.render(options['arm_template'], 
             options.merge({self_signed_cert_resource: self_signed_cert_resource}))
         end
 
