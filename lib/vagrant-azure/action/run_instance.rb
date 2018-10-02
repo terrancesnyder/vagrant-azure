@@ -117,7 +117,7 @@ module VagrantPlugins
           deployment_params = {
             dnsLabelPrefix:       dns_label_prefix,
             vmSize:               vm_size,
-            storageAccountType:   vm_storage_account_type,
+            storageType:          vm_storage_account_type,
             vmName:               vm_name,
             subnetName:           subnet_name,
             virtualNetworkName:   virtual_network_name,
