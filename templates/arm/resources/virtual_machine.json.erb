@@ -39,6 +39,9 @@
         "offer": "<%= image_offer %>",
         "sku": "<%= image_sku %>",
         "version": "<%= image_version %>"
+        <% if vhd_disk_size %>
+        , "diskSizeGB": <%= vhd_disk_size %>
+        <% end %>  
       },
       <% elsif vm_managed_image_id %>
       "imageReference": {
