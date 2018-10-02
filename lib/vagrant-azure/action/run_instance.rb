@@ -320,7 +320,7 @@ module VagrantPlugins
             folder = options['base_folder']
           end
 
-          Vagrant::Util::TemplateRenderer.render(options['arm_template'] + "", 
+          Vagrant::Util::TemplateRenderer.render(options['arm_template'], 
             options.merge({
               self_signed_cert_resource: self_signed_cert_resource,
               template_root: folder
