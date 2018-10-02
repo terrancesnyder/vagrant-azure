@@ -258,7 +258,7 @@ module VagrantPlugins
         @virtual_network_name = nil if @virtual_network_name == UNSET_VALUE
         @subnet_name = nil if @subnet_name == UNSET_VALUE
         @dns_name = nil if @dns_name == UNSET_VALUE
-        @public_dns_prefix = nil if @dns_name == UNSET_VALUE
+        @public_dns_prefix = nil if @public_dns_prefix == UNSET_VALUE
         @tcp_endpoints = nil if @tcp_endpoints == UNSET_VALUE
         @vm_storage_account_type = 'Premium_LRS' if @vm_storage_account_type == UNSET_VALUE
         @availability_set_name = nil if @availability_set_name == UNSET_VALUE
