@@ -45,6 +45,7 @@ module VagrantPlugins
           vm_size                        = config.vm_size
           vm_image_urn                   = config.vm_image_urn
           vm_vhd_uri                     = config.vm_vhd_uri
+          vm_vhd_disk_size               = config.vm_vhd_disk_size
           vm_operating_system            = config.vm_operating_system
           vm_managed_image_id            = config.vm_managed_image_id
           virtual_network_name           = config.virtual_network_name
@@ -94,6 +95,8 @@ module VagrantPlugins
           else
             env[:ui].info(" -- Image URN: #{vm_image_urn}")
           end
+
+          env[:ui].info(" -- OS Disk Size: #{vm_vhd_disk_size}") if vm_vhd_disk_size
 
           env[:ui].info(" -- ARM template: #{arm_template}") if arm_template
           env[:ui].info(" -- Virtual Network Name: #{virtual_network_name}") if virtual_network_name
@@ -150,6 +153,7 @@ module VagrantPlugins
             image_sku:                      image_sku,
             image_version:                  image_version,
             vhd_uri:                        vm_vhd_uri,
+            vhd_disk_size:                  vm_vhd_disk_size,
             vm_managed_image_id:            vm_managed_image_id,
             operating_system:               operating_system,
             data_disks:                     config.data_disks,

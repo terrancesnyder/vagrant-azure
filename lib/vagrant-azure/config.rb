@@ -82,6 +82,11 @@ module VagrantPlugins
       # @return [String]
       attr_accessor :vm_vhd_uri
 
+      # (Optional) The disk size of the OS disk to create/augment from the default in GB.
+      #
+      # @return [Integer]
+      attr_accessor :vm_vhd_disk_size
+
       # (Optional) The Managed Image Id which will be used to build the VM
       # (like: /subscriptions/{sub_id}/resourceGroups/{group_name}/providers/Microsoft.Compute/images/{image_name}) -- default nil.
       #
@@ -210,6 +215,7 @@ module VagrantPlugins
         @vm_password = UNSET_VALUE
         @vm_image_urn = UNSET_VALUE
         @vm_vhd_uri = UNSET_VALUE
+        @vm_vhd_disk_size = UNSET_VALUE
         @vm_image_reference_id = UNSET_VALUE
         @vm_operating_system = UNSET_VALUE
         @vm_managed_image_id = UNSET_VALUE
@@ -249,6 +255,7 @@ module VagrantPlugins
         @vm_password = nil if @vm_password == UNSET_VALUE
         @vm_image_urn = 'canonical:ubuntuserver:16.04.0-LTS:latest' if @vm_image_urn == UNSET_VALUE
         @vm_vhd_uri = nil if @vm_vhd_uri == UNSET_VALUE
+        @vm_vhd_disk_size = nil if @vm_vhd_disk_size == UNSET_VALUE
         @vm_vhd_storage_account_id = nil if @vm_vhd_storage_account_id == UNSET_VALUE
         @vm_operating_system = nil if @vm_operating_system == UNSET_VALUE
         @vm_managed_image_id = nil if @vm_managed_image_id == UNSET_VALUE

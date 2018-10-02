@@ -7,6 +7,9 @@
       "uri": "<%= vhd_uri %>"
     },
     "createOption": "attach"
+    <% if vhd_disk_size %>
+    , "diskSizeGB": <%= vhd_disk_size %>
+    <% end %>  
   <% end %>
   <% if image_uri %>
     "image": {
