@@ -114,17 +114,6 @@ module VagrantPlugins
           azure = env[:azure_arm_service]
           @logger.info("Time to fetch os image details: #{env[:metrics]["get_image_details"]}")
 
-          deployment_params = {
-            dnsLabelPrefix:       dns_label_prefix,
-            vmSize:               vm_size,
-            storageType:          vm_storage_account_type,
-            vmName:               vm_name,
-            subnetName:           subnet_name,
-            virtualNetworkName:   virtual_network_name,
-            securityGroup:        security_group,
-            storageAccountName:   storage_account_name
-          }
-
           # we need to pass different parameters depending upon the OS
           # if custom image, then require vm_operating_system
           operating_system = if vm_managed_image_id
@@ -134,6 +123,21 @@ module VagrantPlugins
                              else
                                get_image_os(azure, location, image_publisher, image_offer, image_sku, image_version)
                              end
+
+          deployment_params = {
+            dnsLabelPrefix:       dns_label_prefix,
+            vmSize:               vm_size,
+            storageType:          vm_storage_account_type,
+            vmName:               vm_name,
+            subnetName:           subnet_name,
+            virtualNetworkName:   virtual_network_name,
+            securityGroup:        security_group,
+            storageAccountName:   storage_account_name,
+            imagePublisher:       image_publisher,
+            imageOffer:           image_offer,
+            imageSku:             image_sku,
+            imageVersion:         image_version
+          }
 
           template_params = {
             availability_set_name:          availability_set_name,
