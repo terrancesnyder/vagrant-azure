@@ -39,9 +39,6 @@
         "offer": "<%= image_offer %>",
         "sku": "<%= image_sku %>",
         "version": "<%= image_version %>"
-        <% if vhd_disk_size %>
-        , "diskSizeGB": <%= vhd_disk_size %>
-        <% end %>  
       },
       <% elsif vm_managed_image_id %>
       "imageReference": {
@@ -60,7 +57,9 @@
         },
         <% end %>
         "createOption": "fromImage",
-        "caching": "ReadWrite"
+        "caching": "ReadWrite"<% if vhd_disk_size %>, 
+        "diskSizeGB": <%= vhd_disk_size %>
+        <% end %>  
       },
       "dataDisks" : [
         <%= data_disks.each_with_index.map { |disk, idx|
