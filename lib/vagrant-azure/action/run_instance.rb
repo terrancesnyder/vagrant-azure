@@ -316,11 +316,11 @@ module VagrantPlugins
           # if template defined is from external we need to use the base folder
           # to resolve the location vs. the GEM folder
           folder = Azure.source_root.join('templates')
-          if (options['arm_template'] != "arm/deployment.json")
-            folder = options['base_folder']
+          if (options[:arm_template] != "arm/deployment.json")
+            folder = options[:base_folder]
           end
 
-          Vagrant::Util::TemplateRenderer.render(options['arm_template'], 
+          Vagrant::Util::TemplateRenderer.render(options[:arm_template], 
             options.merge({
               self_signed_cert_resource: self_signed_cert_resource,
               template_root: folder
