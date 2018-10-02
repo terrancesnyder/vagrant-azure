@@ -262,7 +262,7 @@ module VagrantPlugins
         @tcp_endpoints = nil if @tcp_endpoints == UNSET_VALUE
         @vm_storage_account_type = 'Premium_LRS' if @vm_storage_account_type == UNSET_VALUE
         @availability_set_name = nil if @availability_set_name == UNSET_VALUE
-        @security_group = 'security' if @security_group == UNSET_VALUE
+        @security_group = @vm_name if @security_group == UNSET_VALUE
         @security_config = nil if @security_config == UNSET_VALUE
 
         @instance_ready_timeout = 120 if @instance_ready_timeout == UNSET_VALUE
