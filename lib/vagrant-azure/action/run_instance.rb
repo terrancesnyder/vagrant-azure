@@ -71,6 +71,9 @@ module VagrantPlugins
           # definition (with labels, descriptions, etc)
           security_config                = config.security_config
 
+          # allows override of the resource template
+          arm_template                   = config.arm_template
+
           # Launch!
           env[:ui].info(I18n.t('vagrant_azure.launching_instance'))
           env[:ui].info(" -- Management Endpoint: #{endpoint}")
@@ -92,6 +95,7 @@ module VagrantPlugins
             env[:ui].info(" -- Image URN: #{vm_image_urn}")
           end
 
+          env[:ui].info(" -- ARM template: #{arm_template}") if arm_template
           env[:ui].info(" -- Virtual Network Name: #{virtual_network_name}") if virtual_network_name
           env[:ui].info(" -- Subnet Name: #{subnet_name}") if subnet_name
           env[:ui].info(" -- TCP Endpoints: #{tcp_endpoints}") if tcp_endpoints
@@ -145,6 +149,7 @@ module VagrantPlugins
             vm_managed_image_id:            vm_managed_image_id,
             operating_system:               operating_system,
             data_disks:                     config.data_disks
+            arm_template:                   (config.arm_template || "arm/deployment.json")
           }
 
           if operating_system != "Windows"
@@ -304,7 +309,8 @@ module VagrantPlugins
               gsub("\n", "; ")
             self_signed_cert_resource = VagrantPlugins::Azure::Util::TemplateRenderer.render("arm/selfsignedcert.json", options.merge({setup_winrm_powershell: encoded_setup_winrm_powershell}))
           end
-          VagrantPlugins::Azure::Util::TemplateRenderer.render("arm/deployment.json", options.merge({self_signed_cert_resource: self_signed_cert_resource}))
+          VagrantPlugins::Azure::Util::TemplateRenderer.render(options.arm_template, 
+            options.merge({self_signed_cert_resource: self_signed_cert_resource}))
         end
 
         def build_deployment_params(template_params, deployment_params)
