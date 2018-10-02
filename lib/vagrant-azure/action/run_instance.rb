@@ -317,7 +317,7 @@ module VagrantPlugins
           # to resolve the location vs. the GEM folder
           folder = Azure.source_root.join('templates')
           if (options[:arm_template] != "arm/deployment.json")
-            folder = options[:base_folder]
+            folder = options[:root_path]
           end
 
           Vagrant::Util::TemplateRenderer.render(options[:arm_template], 
