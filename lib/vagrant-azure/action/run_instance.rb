@@ -149,7 +149,8 @@ module VagrantPlugins
             vm_managed_image_id:            vm_managed_image_id,
             operating_system:               operating_system,
             data_disks:                     config.data_disks,
-            arm_template:                   (config.arm_template || "arm/deployment.json")
+            arm_template:                   (config.arm_template || "arm/deployment.json"),
+            root_path:                      machine.env.root_path
           }
 
           if operating_system != "Windows"
@@ -309,8 +310,19 @@ module VagrantPlugins
               gsub("\n", "; ")
             self_signed_cert_resource = VagrantPlugins::Azure::Util::TemplateRenderer.render("arm/selfsignedcert.json", options.merge({setup_winrm_powershell: encoded_setup_winrm_powershell}))
           end
+
+          # if template defined is from external we need to use the base folder
+          # to resolve the location vs. the GEM folder
+          folder = Azure.source_root.join('templates')
+          if (template_file != "arm/deployment.json")
+            folder = options['base_folder']
+          end
+
           VagrantPlugins::Azure::Util::TemplateRenderer.render(options['arm_template'], 
-            options.merge({self_signed_cert_resource: self_signed_cert_resource}))
+            options.merge({
+              self_signed_cert_resource: self_signed_cert_resource,
+              template_root: folder
+            }))
         end
 
         def build_deployment_params(template_params, deployment_params)
