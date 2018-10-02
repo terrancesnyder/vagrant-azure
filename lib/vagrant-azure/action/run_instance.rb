@@ -148,7 +148,7 @@ module VagrantPlugins
             vhd_uri:                        vm_vhd_uri,
             vm_managed_image_id:            vm_managed_image_id,
             operating_system:               operating_system,
-            data_disks:                     config.data_disks
+            data_disks:                     config.data_disks,
             arm_template:                   (config.arm_template || "arm/deployment.json")
           }
 
