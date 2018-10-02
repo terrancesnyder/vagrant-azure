@@ -153,6 +153,8 @@ module VagrantPlugins
             root_path:                      machine.env.root_path
           }
 
+          env[:ui].info(" -- Template Parameters: #{template_params}")
+
           if operating_system != "Windows"
             private_key_paths = machine.config.ssh.private_key_path
             if private_key_paths.nil? || private_key_paths.empty?
@@ -318,7 +320,7 @@ module VagrantPlugins
             folder = options['base_folder']
           end
 
-          VagrantPlugins::Azure::Util::TemplateRenderer.render(options['arm_template'], 
+          VagrantPlugins::Azure::Util::TemplateRenderer.render(options['arm_template'] + "", 
             options.merge({
               self_signed_cert_resource: self_signed_cert_resource,
               template_root: folder
