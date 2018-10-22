@@ -57,6 +57,22 @@ module VagrantPlugins
       attr_accessor :dns_name
       attr_accessor :public_dns_prefix    # backward compat
 
+      # (Optional) Address prefix for networking. For example: 
+      # 10.0.0.0/16
+      # 172.16.0.0/16
+      # 192.168.0.0/16
+      #
+      # @return [String]
+      attr_accessor :address_prefix    # network address prefix
+
+      # (Optional) Address prefix for networking. For example: 
+      # 10.0.0.0/24
+      # 172.16.0.0/24
+      # 192.168.0.0/24
+      #
+      # @return [String]
+      attr_accessor :subnet_prefix    # network subnet prefix
+
       # Password for the VM -- This is not recommended for *nix deployments
       #
       # @return [String]
@@ -238,7 +254,9 @@ module VagrantPlugins
         @security_group = UNSET_VALUE
         @security_config = UNSET_VALUE
         @arm_template = UNSET_VALUE
-        @public_dns_prefix = UNSET_VALUE
+        @public_dns_prefix = UNSET_VALUE,
+        @network_prefix = UNSET_VALUE,
+        @subnet_prefix = UNSET_VALUE,
       end
 
       def finalize!
@@ -266,6 +284,10 @@ module VagrantPlugins
         @subnet_name = nil if @subnet_name == UNSET_VALUE
         @dns_name = nil if @dns_name == UNSET_VALUE
         @public_dns_prefix = nil if @public_dns_prefix == UNSET_VALUE
+
+        @network_prefix = '10.0.0.0/16' if @network_prefix == UNSET_VALUE
+        @subnet_prefix = '10.0.0.0/24' if @subnet_prefix == UNSET_VALUE
+
         @tcp_endpoints = nil if @tcp_endpoints == UNSET_VALUE
         @vm_storage_account_type = 'Standard_LRS' if @vm_storage_account_type == UNSET_VALUE
         @availability_set_name = nil if @availability_set_name == UNSET_VALUE

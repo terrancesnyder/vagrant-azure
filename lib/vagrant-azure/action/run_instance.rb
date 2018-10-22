@@ -57,6 +57,8 @@ module VagrantPlugins
           winrm_port                     = machine.config.winrm.port
           winrm_install_self_signed_cert = config.winrm_install_self_signed_cert
           dns_label_prefix               = config.dns_name
+          network_prefix                 = config.network_prefix
+          subnet_prefix                  = config.subnet_prefix
 
           # enable us to define a specific security group shared between all instances
           # if not defined becomes the machine name
@@ -109,6 +111,9 @@ module VagrantPlugins
           env[:ui].info(" -- Storage Account Name: #{storage_account_name}") if storage_account_name
           env[:ui].info(" -- Security Config: #{security_config}") if security_config
           env[:ui].info(" -- Public DNS Prefix: #{dns_label_prefix}") if dns_label_prefix
+          env[:ui].info(" -- Network Prefix: #{network_prefix}") if network_prefix
+          env[:ui].info(" -- Subnet Prefix: #{subnet_prefix}") if subnet_prefix
+
           env[:ui].info(" -- Base Path: #{machine.env.root_path}")
           
 
@@ -129,6 +134,8 @@ module VagrantPlugins
 
           deployment_params = {
             dnsLabelPrefix:       dns_label_prefix,
+            networkPrefix:        network_prefix,
+            subnetPrefix:         subnet_prefix,
             vmSize:               vm_size,
             storageType:          vm_storage_account_type,
             vmName:               vm_name,

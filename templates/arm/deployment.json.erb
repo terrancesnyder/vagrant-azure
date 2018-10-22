@@ -108,6 +108,20 @@
       "metadata": {
         "description": "The type of storage account to use"
       }
+    },
+    "addressPrefix": {
+      "type": "string",
+      "defaultValue": "10.0.0.0/16",
+      "metadata": {
+        "description": "Address prefix for networking"
+      }
+    },
+    "subnetPrefix": {
+      "type": "string",
+      "defaultValue": "10.0.0.0/24",
+      "metadata": {
+        "description": "Subnet prefix for networking"
+      }
     }
   },
   "variables": {
@@ -121,8 +135,8 @@
     "publicIPAddressName": "[concat(parameters('vmName'), '-ip')]",
     "publicIPAddressType": "Dynamic",
     "networkSecurityGroupName": "[parameters('securityGroup')]",
-    "addressPrefix": "10.0.0.0/16",
-    "subnetPrefix": "10.0.0.0/24",
+    "addressPrefix": "[parameters('addressPrefix')]",
+    "subnetPrefix": "[parameters('subnetPrefix')]",
     "vnetID": "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]",
     "subnetRef": "[concat(variables('vnetID'),'/subnets/',parameters('subnetName'))]",
     "apiVersion": "2015-06-15",
