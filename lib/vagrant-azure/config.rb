@@ -254,9 +254,9 @@ module VagrantPlugins
         @security_group = UNSET_VALUE
         @security_config = UNSET_VALUE
         @arm_template = UNSET_VALUE
-        @public_dns_prefix = UNSET_VALUE,
-        @network_prefix = UNSET_VALUE,
-        @subnet_prefix = UNSET_VALUE,
+        @public_dns_prefix = UNSET_VALUE
+        @network_prefix = UNSET_VALUE
+        @subnet_prefix = UNSET_VALUE
       end
 
       def finalize!
