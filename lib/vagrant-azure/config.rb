@@ -71,7 +71,7 @@ module VagrantPlugins
       # 192.168.0.0/24
       #
       # @return [String]
-      attr_accessor :subnet_prefix    # network subnet prefix
+      attr_accessor :vm_subnet_prefix    # network subnet prefix
 
       # Password for the VM -- This is not recommended for *nix deployments
       #
@@ -255,8 +255,8 @@ module VagrantPlugins
         @security_config = UNSET_VALUE
         @arm_template = UNSET_VALUE
         @public_dns_prefix = UNSET_VALUE
-        @network_prefix = UNSET_VALUE
-        @subnet_prefix = UNSET_VALUE
+        @vm_network_prefix = UNSET_VALUE
+        @vm_subnet_prefix = UNSET_VALUE
       end
 
       def finalize!
@@ -285,8 +285,8 @@ module VagrantPlugins
         @dns_name = nil if @dns_name == UNSET_VALUE
         @public_dns_prefix = nil if @public_dns_prefix == UNSET_VALUE
 
-        @network_prefix = '10.0.0.0/16' if @network_prefix == UNSET_VALUE
-        @subnet_prefix = '10.0.0.0/24' if @subnet_prefix == UNSET_VALUE
+        @vm_network_prefix = '10.0.0.0/16' if @vm_network_prefix == UNSET_VALUE
+        @vm_subnet_prefix = '10.0.0.0/24' if @vm_subnet_prefix == UNSET_VALUE
 
         @tcp_endpoints = nil if @tcp_endpoints == UNSET_VALUE
         @vm_storage_account_type = 'Standard_LRS' if @vm_storage_account_type == UNSET_VALUE
