@@ -63,7 +63,7 @@ module VagrantPlugins
       # 192.168.0.0/16
       #
       # @return [String]
-      attr_accessor :address_prefix    # network address prefix
+      attr_accessor :vm_network_prefix    # network address prefix
 
       # (Optional) Address prefix for networking. For example: 
       # 10.0.0.0/24
